@@ -51,3 +51,31 @@ implementation(project(':HiMiuix'))
 
 - 本项目遵循 LGPL-2.1 开源协议。
 - 使用本项目请在项目中注明！
+
+---
+
+## Changes on this branch (English)
+
+This fork is used by [File Saver Android](https://github.com/fjmd3v/file-saver-android),
+which targets older Android versions. Changes:
+
+* **minSdk 29 → 21.** An audit with Android lint (`NewApi`, `InlinedApi`) at minSdk 21
+  showed the library did not actually need API 29. The few newer calls now use
+  compat helpers or version checks (`ContextCompat.getColor`, int encoding instead of
+  `Parcel#readBoolean`, Application lifecycle callbacks below API 29, …), and core library
+  desugaring is enabled for `java.util.stream`. Consumers must also enable
+  `coreLibraryDesugaringEnabled true` and add `coreLibraryDesugaring
+  'com.android.tools:desugar_jdk_libs:2.1.5'` when their minSdk is below 24.
+  Limitation: below API 26 `MiuixSeekBar` cannot use a minimum other than 0.
+* **Robustness:** `MiuixAppBar` no longer crashes when nested scrolling starts before a
+  target is registered; `PropUtils` falls back to defaults when
+  `android.os.SystemProperties` cannot be reflected (previously every dialog crashed).
+* **Accessibility:** switch / checkbox / radio rows report their checked state and widget
+  class to TalkBack.
+* **Blur:** `MiuiSuperBlur.setBlurAllowed(false)` lets an app turn the Xiaomi blur off
+  (components then use plain surface colours); `isBlurAvailable()` reports whether the
+  methods exist at all.
+* `WindowInsetsHelper` keeps the DecorView default inset handling.
+* Dialog buttons are not all-caps.
+
+Licence unchanged: LGPL-2.1.
