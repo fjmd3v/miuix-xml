@@ -18,6 +18,7 @@
  */
 package com.hchen.himiuix.helper;
 
+import android.os.Build;
 import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.View;
@@ -116,8 +117,14 @@ public class HapticFeedbackHelper {
         if (MiuixUtils.isXiaomi()) {
             if (!PropUtils.getProp("sys.haptic.version", "").isEmpty())
                 view.performHapticFeedback(flag);
-            else view.performHapticFeedback(HapticFeedbackConstants.CONTEXT_CLICK);
-        } else view.performHapticFeedback(HapticFeedbackConstants.CONTEXT_CLICK);
+            else performDefaultHapticFeedback(view);
+        } else performDefaultHapticFeedback(view);
+    }
+
+    private static void performDefaultHapticFeedback(@NonNull View view) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            view.performHapticFeedback(HapticFeedbackConstants.CONTEXT_CLICK);
+        else view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
     }
 
     public static String nameOf(int i) {

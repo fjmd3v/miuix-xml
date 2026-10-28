@@ -41,6 +41,7 @@ import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.UiContext;
+import androidx.core.content.ContextCompat;
 
 import com.hchen.himiuix.R;
 import com.hchen.himiuix.callback.MiuixDialogInterface;
@@ -249,7 +250,7 @@ abstract class MiuixAlertDialogBase implements MiuixDialogInterface {
 
         isCardViewModeEnabled = true;
         xListAdapter = new MiuixListAdapter(context);
-        xListAdapter.setItemBackgroundColor(context.getColor(android.R.color.transparent));
+        xListAdapter.setItemBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent));
         SpringBackLayout springBackLayout = new SpringBackLayout(context);
         springBackLayout.setTarget(xListAdapter.getRecyclerView());
         addView(springBackLayout, xListAdapter.getRecyclerView());
@@ -273,7 +274,7 @@ abstract class MiuixAlertDialogBase implements MiuixDialogInterface {
         if (!isCardViewModeEnabled) return view;
 
         MiuixCardView xCardView = new MiuixCardView(context);
-        xCardView.setCardBackgroundColor(context.getColor(R.color.miuix_card_other));
+        xCardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.miuix_card_other));
         xCardView.setRadius(context.getResources().getDimensionPixelSize(R.dimen.miuix_item_radius));
         addView(xCardView, view);
 

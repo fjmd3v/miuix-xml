@@ -20,6 +20,7 @@ package com.hchen.himiuix.color;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.SeekBar;
 
@@ -63,7 +64,7 @@ class ColorPickerHue extends ColorPickerBaseSeekBar {
             Color.HSVToColor(new float[]{300, 1, 1}),
             Color.HSVToColor(new float[]{360, 1, 1})
         );
-        setMin(0);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) setMin(0); // 0 is already the default below API 26
         setMax(36000);
         setProgress(0);
     }

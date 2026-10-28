@@ -30,6 +30,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 import com.hchen.himiuix.R;
 
@@ -106,13 +107,13 @@ public class ColorSelectView extends View {
         if (width != -1.0F) {
             canvas.setDrawFilter(filter);
             paint.reset();
-            paint.setColor(getContext().getColor(android.R.color.transparent));
+            paint.setColor(ContextCompat.getColor(getContext(), android.R.color.transparent));
             canvas.drawCircle(radius, radius, radius, paint);
             paint.reset();
             paint.setShader(sweepGradient);
             canvas.drawCircle(radius, radius, radius - 0.2F, paint);
             paint.reset();
-            paint.setColor(getContext().getColor(R.color.miuix_color_select_def));
+            paint.setColor(ContextCompat.getColor(getContext(), R.color.miuix_color_select_def));
             canvas.drawCircle(radius, radius, radius - width / 9.0F, paint);
             paint.setColor(color);
             canvas.drawCircle(radius, radius, radius - width / 5.0F, paint);

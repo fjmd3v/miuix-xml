@@ -35,6 +35,7 @@ import android.widget.TextView;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.UiContext;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -86,8 +87,8 @@ public class MiuixListAdapter extends RecyclerView.Adapter<MiuixListAdapter.Miui
         recyclerView.setVerticalScrollBarEnabled(false);
         recyclerView.setAdapter(this);
 
-        itemBackgroundColor = context.getColor(R.color.miuix_item_background);
-        itemChooseBackgroundColor = context.getColor(R.color.miuix_item_choose_background);
+        itemBackgroundColor = ContextCompat.getColor(context, R.color.miuix_item_background);
+        itemChooseBackgroundColor = ContextCompat.getColor(context, R.color.miuix_item_choose_background);
     }
 
     @NonNull
@@ -198,11 +199,11 @@ public class MiuixListAdapter extends RecyclerView.Adapter<MiuixListAdapter.Miui
         if (booleanArray.get(holder.getAbsoluteAdapterPosition())) {
             if (isChooseBackgroundColorEnabled)
                 holder.layout.setBackgroundColor(itemChooseBackgroundColor);
-            holder.textView.setTextColor(context.getColor(R.color.miuix_item_choose_text));
+            holder.textView.setTextColor(ContextCompat.getColor(context, R.color.miuix_item_choose_text));
         } else {
             if (isChooseBackgroundColorEnabled)
                 holder.layout.setBackgroundColor(itemBackgroundColor);
-            holder.textView.setTextColor(context.getColor(R.color.miuix_item_text));
+            holder.textView.setTextColor(ContextCompat.getColor(context, R.color.miuix_item_text));
         }
     }
 

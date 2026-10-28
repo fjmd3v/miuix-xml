@@ -44,6 +44,7 @@ import android.widget.TextView;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.annotation.StringRes;
 import androidx.core.content.ContextCompat;
 
@@ -133,7 +134,7 @@ public class MiuixEditText extends LinearLayout implements OnImeVisibilityChange
         editText.setHorizontalScrollBarEnabled(false);
         editText.setPadding(0, 0, 0, 0);
         editText.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-        editText.setHintTextColor(getContext().getColor(R.color.miuix_edit_hint));
+        editText.setHintTextColor(ContextCompat.getColor(getContext(), R.color.miuix_edit_hint));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM)
             editText.setLocalePreferredLineHeightForMinimumUsed(false);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
@@ -271,6 +272,7 @@ public class MiuixEditText extends LinearLayout implements OnImeVisibilityChange
         iconView.setImageDrawable(drawable);
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     public void setImageIcon(Icon icon) {
         iconView.setImageIcon(icon);
     }

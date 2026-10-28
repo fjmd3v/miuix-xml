@@ -19,6 +19,7 @@
 package com.hchen.himiuix;
 
 import android.content.Context;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -29,6 +30,7 @@ import android.widget.LinearLayout;
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 import com.hchen.himiuix.callback.OnCheckedChangeListener;
 import com.hchen.himiuix.widget.MiuixRadioButton;
@@ -125,6 +127,7 @@ public class MiuixRadioGroup extends LinearLayout implements MiuixRadioButtonVie
     }
 
     @Override
+    @RequiresApi(Build.VERSION_CODES.O)
     public void autofill(AutofillValue value) {
         if (!isEnabled()) return;
 

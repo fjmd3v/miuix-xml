@@ -29,6 +29,7 @@ import android.util.AttributeSet;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 
 import com.hchen.himiuix.R;
 
@@ -68,7 +69,7 @@ public class MiuixCardView extends CardView {
         setCardElevation(0.0f);
         setPreventCornerOverlap(false);
         setUseCompatPadding(false);
-        setCardBackgroundColor(getContext().getColor(android.R.color.transparent));
+        setCardBackgroundColor(ContextCompat.getColor(getContext(), android.R.color.transparent));
     }
 
     public MiuixCardView setTlRadius(float tlRadius) {

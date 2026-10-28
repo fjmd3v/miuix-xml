@@ -28,6 +28,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
 import com.hchen.himiuix.R;
 
@@ -169,10 +170,10 @@ class MiuixAlertHorizontalDialog extends MiuixAlertDialogBase {
     private void updateButtonStyle(int key, Button button) {
         if (key == BUTTON_POSITIVE) {
             button.setBackgroundResource(R.drawable.miuix_dialog_button_2);
-            button.setTextColor(resources.getColor(R.color.miuix_dialog_button_text_2));
+            button.setTextColor(ContextCompat.getColor(context, R.color.miuix_dialog_button_text_2));
         } else {
             button.setBackgroundResource(R.drawable.miuix_dialog_button_1);
-            button.setTextColor(resources.getColor(R.color.miuix_dialog_button_text_1));
+            button.setTextColor(ContextCompat.getColor(context, R.color.miuix_dialog_button_text_1));
         }
     }
 }

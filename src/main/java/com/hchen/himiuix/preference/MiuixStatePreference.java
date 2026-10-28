@@ -244,7 +244,7 @@ class MiuixStatePreference extends MiuixPreference implements OnStateChangeListe
 
         public SavedState(Parcel source) {
             super(source);
-            isChecked = source.readBoolean();
+            isChecked = source.readInt() != 0;
         }
 
         public SavedState(Parcelable superState) {
@@ -254,7 +254,7 @@ class MiuixStatePreference extends MiuixPreference implements OnStateChangeListe
         @Override
         public void writeToParcel(Parcel dest, int flags) {
             super.writeToParcel(dest, flags);
-            dest.writeBoolean(isChecked);
+            dest.writeInt(isChecked ? 1 : 0);
         }
     }
 }

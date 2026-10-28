@@ -21,7 +21,9 @@ package com.hchen.himiuix.widget;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,6 +38,7 @@ import com.hchen.himiuix.R;
  * @author 焕晨HChen
  */
 public class MiuixSeekBar extends AppCompatSeekBar {
+    private static final String TAG = "HiMiuix:SeekBar";
     private Paint paint;
     private int defValue;
     private int stepCount;
@@ -59,7 +62,7 @@ public class MiuixSeekBar extends AppCompatSeekBar {
     protected void init(@Nullable AttributeSet attrs, int defStyleAttr) {
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
-        paint.setColor(getContext().getColor(R.color.miuix_seekbar_def));
+        paint.setColor(ContextCompat.getColor(getContext(), R.color.miuix_seekbar_def));
 
         setThumb(null);
         setBackground(null);
@@ -75,11 +78,25 @@ public class MiuixSeekBar extends AppCompatSeekBar {
         if (isShowDefaultPoint) {
             int width = getWidth();
             int height = getHeight();
-            float scaleWidth = (float) width / (getMax() - getMin());
-            float xPosition = scaleWidth * (isStep ? (stepCount) : (defValue - getMin()));
+            float scaleWidth = (float) width / (getMax() - getMinCompat());
+            float xPosition = scaleWidth * (isStep ? (stepCount) : (defValue - getMinCompat()));
             float yPosition = (float) height / 2;
             canvas.drawCircle(xPosition, yPosition, (float) ((float) height / 6.5), paint);
         }
+    }
+
+    /**
+     * {@link #setMin(int)} 仅在 API 26+ 可用；在更低版本上最小值固定为 0。
+     * <p>
+     * {@link #setMin(int)} is only available on API 26+. Below that the minimum is always 0.
+     */
+    public void setMinCompat(int min) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) setMin(min);
+        else if (min != 0) Log.w(TAG, "SeekBar minimum value " + min + " requires API 26, using 0 instead");
+    }
+
+    public int getMinCompat() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ? getMin() : 0;
     }
 
     public void setDefValue(int defValue) {
