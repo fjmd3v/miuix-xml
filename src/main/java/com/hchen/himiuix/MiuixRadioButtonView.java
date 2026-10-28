@@ -92,6 +92,11 @@ public class MiuixRadioButtonView extends MiuixStateView implements OnStateChang
     }
 
     @Override
+    CharSequence getStateAccessibilityClassName() {
+        return android.widget.RadioButton.class.getName();
+    }
+
+    @Override
     public boolean isChecked() {
         return isChecked;
     }

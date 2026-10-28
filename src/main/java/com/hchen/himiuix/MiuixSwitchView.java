@@ -88,6 +88,11 @@ public class MiuixSwitchView extends MiuixStateView implements OnStateChangeList
     }
 
     @Override
+    CharSequence getStateAccessibilityClassName() {
+        return android.widget.Switch.class.getName();
+    }
+
+    @Override
     public boolean isChecked() {
         return isChecked;
     }

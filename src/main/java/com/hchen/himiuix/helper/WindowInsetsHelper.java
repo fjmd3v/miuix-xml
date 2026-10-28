@@ -113,6 +113,9 @@ public class WindowInsetsHelper {
             @NonNull
             @Override
             public WindowInsetsCompat onApplyWindowInsets(@NonNull View v, @NonNull WindowInsetsCompat insets) {
+                // 保留 DecorView 默认处理（绘制状态栏/导航栏颜色等）
+                // Keep the DecorView default handling (e.g. drawing the system bar colour views).
+                ViewCompat.onApplyWindowInsets(v, insets);
                 for (OnApplyWindowInsetsListener l : listeners) {
                     l.onApplyWindowInsets(v, insets);
                 }

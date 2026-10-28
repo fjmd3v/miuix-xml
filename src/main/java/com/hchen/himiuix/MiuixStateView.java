@@ -21,6 +21,9 @@ package com.hchen.himiuix;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.view.accessibility.AccessibilityEvent;
+import android.view.accessibility.AccessibilityNodeInfo;
+import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -73,6 +76,14 @@ public class MiuixStateView extends MiuixBasicView {
     }
 
     @Override
+    void loadViewWhenBuild() {
+        super.loadViewWhenBuild();
+        // 状态由整行报告，避免指示器被无障碍服务单独聚焦
+        // The whole row reports the state; keep the indicator out of the accessibility tree.
+        getIndicatorView().setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS);
+    }
+
+    @Override
     void updateViewContent() {
         super.updateViewContent();
 
@@ -105,6 +116,27 @@ public class MiuixStateView extends MiuixBasicView {
             getTipView().setVisibility(VISIBLE);
         if (summaryOn != null || summaryOff != null)
             getSummaryView().setVisibility(VISIBLE);
+    }
+
+    // 无障碍：向 TalkBack 等服务暴露可勾选状态
+    // Accessibility: expose the checkable state to TalkBack and other services.
+    @Override
+    public void onInitializeAccessibilityNodeInfo(AccessibilityNodeInfo info) {
+        super.onInitializeAccessibilityNodeInfo(info);
+        info.setClassName(getStateAccessibilityClassName());
+        info.setCheckable(true);
+        info.setChecked(isChecked());
+    }
+
+    @Override
+    public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
+        super.onInitializeAccessibilityEvent(event);
+        event.setClassName(getStateAccessibilityClassName());
+        event.setChecked(isChecked());
+    }
+
+    CharSequence getStateAccessibilityClassName() {
+        return CompoundButton.class.getName();
     }
 
     public boolean isChecked() {
