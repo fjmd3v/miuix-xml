@@ -22,6 +22,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.SeekBar;
 
@@ -82,7 +83,8 @@ class ColorPickerBaseSeekBar extends MiuixSeekBar implements SeekBar.OnSeekBarCh
         drawable.setColors(colors);
         if (layerDrawable == null) setProgressDrawable(drawable);
         else {
-            layerDrawable.setDrawable(1, drawable);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) layerDrawable.setDrawable(1, drawable);
+            else layerDrawable.setDrawableByLayerId(layerDrawable.getId(1), drawable);
             setProgressDrawable(layerDrawable);
         }
     }

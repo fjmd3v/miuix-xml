@@ -88,6 +88,11 @@ public class MiuixCheckBoxView extends MiuixStateView implements OnStateChangeLi
     }
 
     @Override
+    CharSequence getStateAccessibilityClassName() {
+        return android.widget.CheckBox.class.getName();
+    }
+
+    @Override
     public boolean isChecked() {
         return isChecked;
     }

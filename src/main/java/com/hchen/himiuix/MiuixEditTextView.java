@@ -22,6 +22,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Icon;
+import android.os.Build;
 import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.text.method.KeyListener;
@@ -30,6 +31,7 @@ import android.util.AttributeSet;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.annotation.StringRes;
 
 import com.hchen.himiuix.widget.MiuixEditText;
@@ -178,6 +180,7 @@ public class MiuixEditTextView extends MiuixBasicView {
         xEditText.setImageDrawable(drawable);
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     public void setImageIcon(Icon icon) {
         xEditText.setImageIcon(icon);
     }

@@ -25,6 +25,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.MotionEvent;
@@ -33,6 +34,7 @@ import android.view.ViewConfiguration;
 import android.view.animation.AccelerateInterpolator;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
 import com.hchen.himiuix.R;
 import com.hchen.himiuix.utils.MiuixUtils;
@@ -145,11 +147,11 @@ public class ShadowHelper {
         background = background.mutate();
         touchSlop = ViewConfiguration.get(targetView.getContext()).getScaledTouchSlop();
         if (background instanceof GradientDrawable drawable) {
-            ColorStateList colorStateList = drawable.getColor();
+            ColorStateList colorStateList = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N ? drawable.getColor() : null;
             if (colorStateList != null)
                 originalColor = colorStateList.getDefaultColor();
             else
-                originalColor = targetView.getContext().getColor(R.color.miuix_basic_background_color);
+                originalColor = ContextCompat.getColor(targetView.getContext(), R.color.miuix_basic_background_color);
         } else if (background instanceof ColorDrawable drawable)
             originalColor = drawable.getColor();
 

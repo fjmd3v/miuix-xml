@@ -146,7 +146,7 @@ public class MiuixSeekBarView extends MiuixBasicView {
 
         initStepData();
         if (maxValue != Integer.MIN_VALUE) xSeekBar.setMax(isStep ? stepCount : maxValue);
-        if (minValue != Integer.MIN_VALUE) xSeekBar.setMin(isStep ? 0 : minValue);
+        if (minValue != Integer.MIN_VALUE) xSeekBar.setMinCompat(isStep ? 0 : minValue);
         if (value != Integer.MIN_VALUE)
             xSeekBar.setProgress(isStep ? calculateStepCount(value) : value);
         if (defValue != Integer.MIN_VALUE) {

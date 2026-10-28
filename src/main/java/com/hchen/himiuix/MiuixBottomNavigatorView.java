@@ -40,6 +40,7 @@ import androidx.annotation.IdRes;
 import androidx.annotation.MenuRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.WindowInsetsCompat;
 
@@ -102,12 +103,12 @@ public class MiuixBottomNavigatorView extends LinearLayout implements OnItemSele
 
         setOrientation(HORIZONTAL);
         if (!MiuiSuperBlur.isSupportBlur())
-            setBackgroundColor(getContext().getColor(R.color.miuix_default_surface_color));
+            setBackgroundColor(ContextCompat.getColor(getContext(), R.color.miuix_default_surface_color));
         setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         setMinimumHeight(getResources().getDimensionPixelSize(R.dimen.miuix_bottom_menu_min_height));
         targetHeight = getResources().getDimensionPixelSize(R.dimen.miuix_bottom_menu_target_height);
 
-        dividerPaint.setColor(getResources().getColor(R.color.miuix_bottom_divider_color));
+        dividerPaint.setColor(ContextCompat.getColor(getContext(), R.color.miuix_bottom_divider_color));
         dividerPaint.setStrokeWidth(getResources().getDisplayMetrics().density);
 
         if (menuId != -1) inflateMenu(menuId);
@@ -149,7 +150,7 @@ public class MiuixBottomNavigatorView extends LinearLayout implements OnItemSele
     }
 
     private void applyBlur() {
-        int colorBottomSurface = getContext().getColor(R.color.miuix_default_surface_color);
+        int colorBottomSurface = ContextCompat.getColor(getContext(), R.color.miuix_default_surface_color);
         MiuiSuperBlur.setMiViewBlurMode(this, 1);
         MiuiSuperBlur.setMiBackgroundBlurMode(this, 1);
         MiuiSuperBlur.setMiBackgroundBlurRadius(this, (int) (getContext().getResources().getDisplayMetrics().density * 66 + 0.5f));
@@ -474,7 +475,7 @@ public class MiuixBottomNavigatorView extends LinearLayout implements OnItemSele
             title = new TextView(getContext());
             title.setGravity(CENTER);
             title.setSingleLine();
-            title.setTextColor(getResources().getColor(R.color.miuix_title_color));
+            title.setTextColor(ContextCompat.getColor(getContext(), R.color.miuix_title_color));
 
             addView(icon);
             addView(title);

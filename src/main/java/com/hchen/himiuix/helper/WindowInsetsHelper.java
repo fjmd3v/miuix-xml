@@ -20,6 +20,7 @@ package com.hchen.himiuix.helper;
 
 import android.app.Activity;
 import android.app.Application;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
@@ -29,6 +30,7 @@ import androidx.core.view.OnApplyWindowInsetsListener;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.lang.ref.WeakReference;
 import java.util.HashSet;
 
 public class WindowInsetsHelper {
@@ -41,7 +43,8 @@ public class WindowInsetsHelper {
         @Override
         public void onActivityDestroyed(@NonNull Activity activity) {
             removeApplyWindowInsetsListener(null);
-            activity.unregisterActivityLifecycleCallbacks(this);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
+                activity.unregisterActivityLifecycleCallbacks(this);
         }
 
         @Override
@@ -66,12 +69,53 @@ public class WindowInsetsHelper {
     };
 
     public static void initialWindowInsetsListener(Activity activity) {
-        activity.registerActivityLifecycleCallbacks(callbacks);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            activity.registerActivityLifecycleCallbacks(callbacks);
+        } else {
+            // Activity#registerActivityLifecycleCallbacks 需要 API 29，低版本通过 Application 监听同一个 Activity
+            final Application application = activity.getApplication();
+            final WeakReference<Activity> target = new WeakReference<>(activity);
+            application.registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
+                @Override
+                public void onActivityCreated(@NonNull Activity a, @Nullable Bundle savedInstanceState) {
+                }
+
+                @Override
+                public void onActivityStarted(@NonNull Activity a) {
+                }
+
+                @Override
+                public void onActivityResumed(@NonNull Activity a) {
+                }
+
+                @Override
+                public void onActivityPaused(@NonNull Activity a) {
+                }
+
+                @Override
+                public void onActivityStopped(@NonNull Activity a) {
+                }
+
+                @Override
+                public void onActivitySaveInstanceState(@NonNull Activity a, @NonNull Bundle outState) {
+                }
+
+                @Override
+                public void onActivityDestroyed(@NonNull Activity a) {
+                    if (a != target.get()) return;
+                    callbacks.onActivityDestroyed(a);
+                    application.unregisterActivityLifecycleCallbacks(this);
+                }
+            });
+        }
 
         ViewCompat.setOnApplyWindowInsetsListener(activity.getWindow().getDecorView(), new OnApplyWindowInsetsListener() {
             @NonNull
             @Override
             public WindowInsetsCompat onApplyWindowInsets(@NonNull View v, @NonNull WindowInsetsCompat insets) {
+                // 保留 DecorView 默认处理（绘制状态栏/导航栏颜色等）
+                // Keep the DecorView default handling (e.g. drawing the system bar colour views).
+                ViewCompat.onApplyWindowInsets(v, insets);
                 for (OnApplyWindowInsetsListener l : listeners) {
                     l.onApplyWindowInsets(v, insets);
                 }

@@ -29,6 +29,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 import com.hchen.himiuix.callback.MiuixDialogInterface;
 import com.hchen.himiuix.callback.OnChooseItemListener;
@@ -97,11 +98,11 @@ public class MiuixListView extends MiuixBasicView implements OnChooseItemListene
         if (!isDialogModeEnabled) {
             booleanArray = new SparseBooleanArray();
             xCardView = new MiuixCardView(getContext());
-            xCardView.setCardBackgroundColor(getContext().getColor(R.color.miuix_card_other));
+            xCardView.setCardBackgroundColor(ContextCompat.getColor(getContext(), R.color.miuix_card_other));
             xCardView.setRadius(getContext().getResources().getDimensionPixelSize(R.dimen.miuix_item_radius));
 
             xListAdapter = new MiuixListAdapter(getContext());
-            xListAdapter.setItemBackgroundColor(getContext().getColor(android.R.color.transparent));
+            xListAdapter.setItemBackgroundColor(ContextCompat.getColor(getContext(), android.R.color.transparent));
             SpringBackLayout springBackLayout = new SpringBackLayout(getContext());
             springBackLayout.setGluttonEnabled(true);
             springBackLayout.setTarget(xListAdapter.getRecyclerView());

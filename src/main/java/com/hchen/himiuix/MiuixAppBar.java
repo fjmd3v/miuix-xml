@@ -43,6 +43,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.NestedScrollingParent3;
 import androidx.core.view.NestedScrollingParentHelper;
@@ -189,7 +190,7 @@ public class MiuixAppBar extends ViewGroup implements NestedScrollingParent3, On
         toolbarTitleView = new TextView(getContext());
         toolbarTitleView.setSingleLine();
         toolbarTitleView.setGravity(Gravity.CENTER);
-        toolbarTitleView.setTextColor(getResources().getColor(R.color.miuix_title_color));
+        toolbarTitleView.setTextColor(ContextCompat.getColor(getContext(), R.color.miuix_title_color));
         toolbarTitleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimensionPixelSize(R.dimen.miuix_appbar_title_size));
         toolbar.addView(toolbarTitleView);
         Toolbar.LayoutParams layoutParams = (Toolbar.LayoutParams) toolbarTitleView.getLayoutParams();
@@ -201,7 +202,7 @@ public class MiuixAppBar extends ViewGroup implements NestedScrollingParent3, On
         largeTitleView = new TextView(getContext());
         largeTitleView.setSingleLine();
         largeTitleView.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
-        largeTitleView.setTextColor(getResources().getColor(R.color.miuix_title_color));
+        largeTitleView.setTextColor(ContextCompat.getColor(getContext(), R.color.miuix_title_color));
         largeTitleView.setPadding(getResources().getDimensionPixelSize(R.dimen.miuix_appbar_padding_start), 0, 0, 0);
         largeTitleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimensionPixelSize(R.dimen.miuix_appbar_large_title_size));
         LayoutParams titleParams = new LayoutParams(LayoutParams.MATCH_PARENT, getResources().getDimensionPixelSize(R.dimen.miuix_appbar_collapsible_title_height));
@@ -272,7 +273,7 @@ public class MiuixAppBar extends ViewGroup implements NestedScrollingParent3, On
         overallView.addView(toolbar);
         overallView.addView(collapsibleTitleView);
         if (!MiuiSuperBlur.isSupportBlur())
-            overallView.setBackgroundColor(getContext().getColor(R.color.miuix_theme_color));
+            overallView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.miuix_theme_color));
         addView(overallView);
 
         setTitle(title);
@@ -504,7 +505,7 @@ public class MiuixAppBar extends ViewGroup implements NestedScrollingParent3, On
 
     @Override
     public void onNestedScroll(@NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed, int type, @NonNull int[] consumed) {
-        if (target != targetView.getParent()) return;
+        if (targetView == null || target != targetView.getParent()) return;
 
         // 当 targetView 滚动到顶部或底部后，还有未消耗的滚动量 dyUnconsumed
         // dyUnconsumed < 0: targetView 滚动到顶部后，还想继续向下滚动 (展开 Toolbar 的机会)
@@ -539,7 +540,7 @@ public class MiuixAppBar extends ViewGroup implements NestedScrollingParent3, On
 
     @Override
     public void onNestedPreScroll(@NonNull View target, int dx, int dy, @NonNull int[] consumed, int type) {
-        if (target != targetView.getParent()) return;
+        if (targetView == null || target != targetView.getParent()) return;
         if (collapsibleScrollRange <= 0) return;
 
         // dy > 0: 手指向上滑动，内容向上滚动 (折叠Toolbar)

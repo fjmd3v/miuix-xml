@@ -31,6 +31,7 @@ import android.view.WindowManager;
 import androidx.annotation.NonNull;
 import androidx.annotation.StyleRes;
 import androidx.annotation.UiContext;
+import androidx.core.content.ContextCompat;
 
 import com.hchen.himiuix.R;
 import com.hchen.himiuix.callback.MiuixDialogInterface;
@@ -236,7 +237,7 @@ public class MiuixDropDownDialog {
         cardView.setRadius(context.getResources().getDimensionPixelSize(R.dimen.miuix_item_radius));
 
         window.setContentView(cardView);
-        window.getDecorView().setBackgroundColor(context.getResources().getColor(android.R.color.transparent));
+        window.getDecorView().setBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent));
         window.setWindowAnimations(R.style.MiuixDropDownDialogAnimation);
 
         MiuixListAdapter adapter = new MiuixListAdapter(context);

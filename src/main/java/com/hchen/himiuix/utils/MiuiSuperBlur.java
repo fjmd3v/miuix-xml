@@ -111,8 +111,34 @@ public class MiuiSuperBlur {
         });
     }
 
-    public static boolean isSupportBlur() {
+    private static volatile boolean isBlurAllowed = true;
+
+    /**
+     * 允许宿主应用在设备不支持或不适合时关闭高级材质（例如省电模式、低端设备）。
+     * 关闭后组件会使用普通的表面颜色。
+     * <p>
+     * Lets the host app turn the Xiaomi blur off (e.g. when the device reports that
+     * blur is disabled). Components then fall back to plain surface colors.
+     */
+    public static void setBlurAllowed(boolean allowed) {
+        isBlurAllowed = allowed;
+    }
+
+    public static boolean isBlurAllowed() {
+        return isBlurAllowed;
+    }
+
+    /**
+     * 系统是否提供小米高级材质接口（不考虑 {@link #setBlurAllowed(boolean)}）
+     * <p>
+     * Whether the Xiaomi blur methods exist on this system, ignoring {@link #setBlurAllowed(boolean)}.
+     */
+    public static boolean isBlurAvailable() {
         return setMiViewBlurMode != null;
+    }
+
+    public static boolean isSupportBlur() {
+        return isBlurAllowed && isBlurAvailable();
     }
 
     public static void chooseBackgroundBlurContainer(View view, View container) {
