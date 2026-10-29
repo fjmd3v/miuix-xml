@@ -151,7 +151,13 @@ public class MiuixListAdapter extends RecyclerView.Adapter<MiuixListAdapter.Miui
         updateItemBackground(holder);
         holder.textView.setText(items[position]);
         holder.xCheckBox.setChecked(booleanArray.get(position));
-        holder.layout.setOnTouchListener((v, event) -> holder.xCheckBox.dispatchTouchEvent(event));
+        // 整行可点击：触摸事件原样转发给复选框时坐标属于整行，手指稍有移动就会落在
+        // 复选框范围外并取消点击，因此改为点击整行时触发复选框。
+        // Make the whole row clickable. Forwarding the row's raw touch events to the small
+        // check box used row coordinates, so any finger movement fell outside the check box
+        // and cancelled the click (options appeared not to respond on real devices).
+        holder.layout.setClickable(true);
+        holder.layout.setOnClickListener(v -> holder.xCheckBox.performClick());
         holder.xCheckBox.setOnStateChangeListener(newValue -> {
             if (onChooseItemListener == null || onChooseItemListener.onChooseBefore(items[holder.getAbsoluteAdapterPosition()], holder.getAbsoluteAdapterPosition())) {
                 if (isMultipleChoiceEnabled) {

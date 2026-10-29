@@ -77,5 +77,7 @@ which targets older Android versions. Changes:
   methods exist at all.
 * `WindowInsetsHelper` keeps the DecorView default inset handling.
 * Dialog buttons are not all-caps.
+* Drop-down / list dialog options respond to real finger taps (the whole row is
+  clickable instead of forwarding touch events to the check box).
 
 Licence unchanged: LGPL-2.1.
